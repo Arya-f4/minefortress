@@ -1,4 +1,4 @@
-name: Release new version on TAG push
+name: Release new version on TAG pushed
 
 on:
   push:
