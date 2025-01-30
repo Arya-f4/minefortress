@@ -32,21 +32,19 @@ jobs:
         echo "Commits texts: $commitsText"
         echo "GITHUB_COMMITS_TEXT=$commitsText" >> $GITHUB_ENV
 
-    - name: Build with Gradle
+    - name: Build with Gradle (Verbose Logging)
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: build
+        arguments: build --stacktrace --info
       env:
         GITHUB_USERNAME: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BUILD_NUMBER: ${{ github.run_number }}
 
-    # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
-    # the publishing section of your build.gradle
-    - name: Publish to GitHub Packages
+    - name: Publish to GitHub Packages (Debug Logging)
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: publishAllPublicationsToGitHubPackagesRepository
+        arguments: publishAllPublicationsToGitHubPackagesRepository --stacktrace --debug
       env:
         GITHUB_USERNAME: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -141,5 +139,3 @@ jobs:
           ${{ steps.prepare-reddit-messages.outputs.redditMessages }}
           
           https://builds.minecraftfortress.org
-
-
